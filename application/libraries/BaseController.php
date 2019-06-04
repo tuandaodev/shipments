@@ -55,9 +55,9 @@ class BaseController extends CI_Controller {
 	 */
 	function isAdmin() {
 		if ($this->role != ROLE_ADMIN) {
-			return true;
-		} else {
 			return false;
+		} else {
+			return true;
 		}
 	}
 	

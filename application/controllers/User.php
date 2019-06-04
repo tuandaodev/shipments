@@ -36,7 +36,7 @@ class User extends BaseController
      */
     function userListing()
     {
-        if($this->isAdmin() == TRUE)
+        if($this->isAdmin() == FALSE)
         {
             $this->loadThis();
         }
@@ -64,7 +64,7 @@ class User extends BaseController
      */
     function addNew()
     {
-        if($this->isAdmin() == TRUE)
+        if($this->isAdmin() == FALSE)
         {
             $this->loadThis();
         }
@@ -102,7 +102,7 @@ class User extends BaseController
      */
     function addNewUser()
     {
-        if($this->isAdmin() == TRUE)
+        if($this->isAdmin() == FALSE)
         {
             $this->loadThis();
         }
@@ -156,7 +156,7 @@ class User extends BaseController
      */
     function editOld($userId = NULL)
     {
-        if($this->isAdmin() == TRUE || $userId == 1)
+        if($this->isAdmin() == FALSE || $userId == 1)
         {
             $this->loadThis();
         }
@@ -182,7 +182,7 @@ class User extends BaseController
      */
     function editUser()
     {
-        if($this->isAdmin() == TRUE)
+        if($this->isAdmin() == FALSE)
         {
             $this->loadThis();
         }
@@ -248,7 +248,7 @@ class User extends BaseController
      */
     function deleteUser()
     {
-        if($this->isAdmin() == TRUE)
+        if($this->isAdmin() == FALSE)
         {
             echo(json_encode(array('status'=>'access')));
         }
@@ -280,7 +280,7 @@ class User extends BaseController
      */
     function loginHistoy($userId = NULL)
     {
-        if($this->isAdmin() == TRUE)
+        if($this->isAdmin() == FALSE)
         {
             $this->loadThis();
         }
