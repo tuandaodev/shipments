@@ -30,6 +30,11 @@ $config['base_url'] = $base;
 
 $config['base_url'] = 'http://localhost:1111/ship/';
 
+$config['title']      = 'EMS Manager';
+$config['assets_dir']     = 'assets';
+// $config['frameworks_dir'] = $config['assets_dir'] . '/frameworks';
+// $config['plugins_dir']    = $config['assets_dir'] . '/plugins';
+
 /*
 |--------------------------------------------------------------------------
 | Index File

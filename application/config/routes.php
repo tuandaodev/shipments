@@ -91,3 +91,11 @@ $route['createPasswordUser'] = "login/createPasswordUser";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
+
+
+// Cron Job
+$route['cron/system'] = 'cron/SystemCronJob/main';
+$route['cron/daily'] = 'cron/CronJob/main';
+
+// WebHook
+$route['api/webhook/callback'] = 'api/Webhook/index';

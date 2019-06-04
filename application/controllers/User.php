@@ -18,7 +18,7 @@ class User extends BaseController
     {
         parent::__construct();
         $this->load->model('user_model');
-        $this->isLoggedIn();   
+        $this->isLoggedIn();
     }
     
     /**
@@ -26,7 +26,7 @@ class User extends BaseController
      */
     public function index()
     {
-        $this->global['pageTitle'] = 'Ems Manager : Dashboard';
+        $this->global['pageTitle'] = 'Dashboard';
         
         $this->loadViews("dashboard", $this->global, NULL , NULL);
     }
@@ -53,7 +53,7 @@ class User extends BaseController
             
             $data['userRecords'] = $this->user_model->userListing($searchText, $returns["page"], $returns["segment"]);
             
-            $this->global['pageTitle'] = 'Ems Manager : User Listing';
+            $this->global['pageTitle'] = 'User Listing';
             
             $this->loadViews("users", $this->global, $data, NULL);
         }
@@ -73,7 +73,7 @@ class User extends BaseController
             $this->load->model('user_model');
             $data['roles'] = $this->user_model->getUserRoles();
             
-            $this->global['pageTitle'] = 'Ems Manager : Add New User';
+            $this->global['pageTitle'] = 'Add New User';
 
             $this->loadViews("addNew", $this->global, $data, NULL);
         }
@@ -170,7 +170,7 @@ class User extends BaseController
             $data['roles'] = $this->user_model->getUserRoles();
             $data['userInfo'] = $this->user_model->getUserInfo($userId);
             
-            $this->global['pageTitle'] = 'Ems Manager : Edit User';
+            $this->global['pageTitle'] = 'Edit User';
             
             $this->loadViews("editOld", $this->global, $data, NULL);
         }
@@ -269,7 +269,7 @@ class User extends BaseController
      */
     function pageNotFound()
     {
-        $this->global['pageTitle'] = 'Ems Manager : 404 - Page Not Found';
+        $this->global['pageTitle'] = '404 - Page Not Found';
         
         $this->loadViews("404", $this->global, NULL, NULL);
     }
@@ -306,7 +306,7 @@ class User extends BaseController
 
             $data['userRecords'] = $this->user_model->loginHistory($userId, $searchText, $fromDate, $toDate, $returns["page"], $returns["segment"]);
             
-            $this->global['pageTitle'] = 'Ems Manager : User Login History';
+            $this->global['pageTitle'] = 'User Login History';
             
             $this->loadViews("loginHistory", $this->global, $data, NULL);
         }        
@@ -320,7 +320,7 @@ class User extends BaseController
         $data["userInfo"] = $this->user_model->getUserInfoWithRole($this->vendorId);
         $data["active"] = $active;
         
-        $this->global['pageTitle'] = $active == "details" ? 'Ems Manager : My Profile' : 'Ems Manager : Change Password';
+        $this->global['pageTitle'] = $active == "details" ? 'My Profile' : 'Change Password';
         $this->loadViews("profile", $this->global, $data, NULL);
     }
 

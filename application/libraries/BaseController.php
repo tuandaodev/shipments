@@ -15,6 +15,16 @@ class BaseController extends CI_Controller {
 	protected $global = array ();
 	protected $lastLogin = '';
 	
+	public function __construct() {
+		parent::__construct();
+		$this->load->library(array('form_validation'));
+		$this->load->library('session');
+		
+		$this->global['title'] = $this->config->item('title');
+
+		$this->global['assets_dir'] = $this->config->item('assets_dir');
+	}
+
 	/**
 	 * Takes mixed data and optionally a status code, then creates the response
 	 *
@@ -76,7 +86,7 @@ class BaseController extends CI_Controller {
 	 * This function is used to load the set of views
 	 */
 	function loadThis() {
-		$this->global ['pageTitle'] = 'Ems Manager : Access Denied';
+		$this->global ['pageTitle'] = 'Access Denied';
 		
 		$this->load->view ( 'includes/header', $this->global );
 		$this->load->view ( 'access' );
