@@ -95,7 +95,9 @@ $route['createPasswordUser'] = "login/createPasswordUser";
 
 // Cron Job
 $route['cron/system'] = 'cron/SystemCronJob/main';
-$route['cron/daily'] = 'cron/CronJob/main';
+
+$route['cron/cron_5_min'] = 'cron/CronJob/cron_5_min';
+$route['cron/cron_2_min'] = 'cron/CronJob/cron_2_min';
 
 // WebHook
 $route['api/webhook/callback'] = 'api/Webhook/index';

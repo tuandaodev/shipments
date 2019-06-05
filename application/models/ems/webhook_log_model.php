@@ -20,6 +20,18 @@ class webhook_log_model extends CI_Model {
             return FALSE;
         }
     }
+
+    // Get function to run crons
+    public function get_crons()
+    {
+        $query = $this->db->query("SELECT * FROM {$this->db_name} WHERE cron_status = 0");
+        
+        if ($query->num_rows() > 0) {
+            return $query->result_array();
+        } else {
+            return FALSE;
+        }
+    }
     
     public function get($id)
     {

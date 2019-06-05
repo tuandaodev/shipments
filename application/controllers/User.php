@@ -28,7 +28,13 @@ class User extends BaseController
     {
         $this->global['pageTitle'] = 'Dashboard';
         
-        $this->loadViews("dashboard", $this->global, NULL , NULL);
+        $this->load->model('ems/merchant_token_model');
+        $this->load->model('ems/shipments_model');
+
+        $data['merchants_count'] = $this->merchant_token_model->get_count();
+        $data['shipments_count'] = $this->shipments_model->get_count();
+
+        $this->loadViews("dashboard", $this->global, $data , NULL);
     }
     
     /**

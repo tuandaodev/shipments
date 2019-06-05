@@ -20,6 +20,18 @@ class merchant_token_model extends CI_Model {
             return FALSE;
         }
     }
+
+    public function get_count()
+    {
+        $query = $this->db->query("SELECT count(*) as count FROM {$this->db_name}");
+        
+        if ($query->num_rows() > 0) {
+            $return = $query->row_array();
+            return $return['count'];
+        } else {
+            return FALSE;
+        }
+    }
     
     public function get_active_tokens()
     {

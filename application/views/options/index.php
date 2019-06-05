@@ -28,7 +28,10 @@
                                 id="<?php echo $item['name'] ?>" value="<?php echo $item['value'] ?>">
                         </div>
 
-                        <?php endforeach; ?>
+                        <?php 
+                    
+                    
+                    endforeach; ?>
                         
                         <div class="box-footer">
                             <?php echo form_button(array('type' => 'submit', 'class' => 'btn btn-primary btn-flat', 'content' => "Save Options")); ?>

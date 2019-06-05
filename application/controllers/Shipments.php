@@ -26,16 +26,26 @@ class Shipments extends BaseController {
     }
 
     public function index() {
-        $data['shipments_list'] = $this->db_model->get_list();
+        
+        if (isset($_POST['selected_marchant_token'])) {
+            $this->session->set_userdata('selected_marchant_token', $_POST['selected_marchant_token']);
+        }
 
         // Load status list
         $this->load->model('ems/shipments_status_model');
         $data['shipments_status'] = $this->shipments_status_model->gets();
 
-        if (isset($_POST['selected_shipment_status']) && !empty($_POST['selected_shipment_status'])) {
-            $data['selected_shipment_status'] = $_POST['selected_shipment_status'];
+        if (isset($_POST['selected_shipment_status'])) {
+            $data['selected_shipment_status'] = $this->session->set_userdata('selected_shipment_status', $_POST['selected_shipment_status']);
+        }
+
+        $data['selected_shipment_status'] = $this->session->userdata('selected_shipment_status');
+        $data['selected_marchant_token'] = $this->session->userdata('selected_marchant_token');
+
+        if ($data['selected_marchant_token']) {
+            $data['shipments_list'] = $this->db_model->get_list($data);
         } else {
-            $data['selected_shipment_status'] = "";
+            $data['shipments_list'] = [];
         }
 
         $this->loadViews("shipments/index", $this->global, $data , NULL);

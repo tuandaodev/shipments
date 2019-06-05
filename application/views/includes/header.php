@@ -96,12 +96,7 @@
           </ul>
         </div>
 
-        <?php if ($this->router->fetch_class() == 'shipments') { 
-          
-          if (isset($_POST['selected_marchant_token']) && !empty($_POST['selected_marchant_token'])) {
-            $this->session->set_userdata('selected_marchant_token', $_POST['selected_marchant_token']);
-          }
-          
+        <?php if ($this->router->fetch_class() == 'shipments') {
           ?>
           <form class="navbar-form navbar-left" method="POST">
               <div class="form-group">
@@ -131,7 +126,7 @@
               <i class="fa fa-dashboard"></i> <span>Dashboard</span></i>
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a href="#">
               <i class="fa fa-plane"></i>
               <span>New Task</span>
@@ -142,8 +137,8 @@
               <i class="fa fa-ticket"></i>
               <span>My Tasks</span>
             </a>
-          </li>
-          <li class="treeview">
+          </li> -->
+          <!-- <li class="treeview">
             <a href="#">
               <i class="fa fa-share"></i> <span>Multilevel</span>
               <span class="pull-right-container">
@@ -175,42 +170,7 @@
               </li>
               <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
             </ul>
-          </li>
-          <?php
-          if ($role == ROLE_ADMIN || $role == ROLE_MANAGER) {
-            ?>
-            <li>
-              <a href="#">
-                <i class="fa fa-thumb-tack"></i>
-                <span>Task Status</span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-upload"></i>
-                <span>Task Uploads</span>
-              </a>
-            </li>
-          <?php
-        }
-        if ($role == ROLE_ADMIN) {
-          ?>
-            <li>
-              <a href="<?php echo base_url(); ?>userListing">
-                <i class="fa fa-users"></i>
-                <span>Users</span>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-files-o"></i>
-                <span>Reports</span>
-              </a>
-            </li>
-          <?php
-        }
-        ?>
-
+          </li> -->
           <li class="<?= active_link_controller('shipments') ?>">
             <a href="<?php echo site_url('shipments'); ?>">
               <i class="fa fa-users"></i> <span>Shipments</span>
@@ -218,15 +178,23 @@
           </li>
 
           <?php if ($role == ROLE_ADMIN) { ?>
-            <li class="<?= active_link_controller('options') ?>">
-              <a href="<?php echo site_url('options'); ?>">
-                <i class="fa fa-cogs"></i> <span>Options</span>
+
+            <li>
+              <a href="<?php echo base_url(); ?>userListing">
+                <i class="fa fa-users"></i>
+                <span>Users</span>
               </a>
             </li>
 
             <li class="<?= active_link_controller('merchant_token') ?>">
               <a href="<?php echo site_url('merchant_token'); ?>">
                 <i class="fa fa-cogs"></i> <span>Merchant Token</span>
+              </a>
+            </li>
+
+            <li class="<?= active_link_controller('options') ?>">
+              <a href="<?php echo site_url('options'); ?>">
+                <i class="fa fa-cogs"></i> <span>Options</span>
               </a>
             </li>
 

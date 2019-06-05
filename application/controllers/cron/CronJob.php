@@ -10,38 +10,64 @@ class CronJob extends CI_Controller {
         
     }
 
-    public function main() {
-        
+    private function checkSecurity() {
         $cron_token = false;
-        if (isset($_GET['cron_token']) && !empty($_GET['cron_token'])) {
-            $cron_token = $_GET['cron_token'];
+        if (isset($_GET['key']) && !empty($_GET['key'])) {
+            $cron_token = $_GET['key'];
         } else {
-            exit("Exit;");
+            exit("Security Check.");
         }
         
         $my_cron_token = $this->option->get_option('cron_token');
         
         if ($cron_token != $my_cron_token) {
-            exit("Exit;");
+            exit("Security Check.");
         }
-        
+    }
 
+    public function cron_5_min() {
+        $this->checkSecurity();
         $return = $this->get_danh_sach_buu_gui();
-        
-        echo "<pre>";
-        print_r($return);
-        echo "</pre>";
+        echo "DONE.";
         exit;
-        
     }
 
-    public function get_buu_cuc() {
+    public function cron_2_min() {
+        $this->checkSecurity();
+        $return = $this->get_buu_cuc();
+        echo "DONE.";
+        exit;
+    }
+
+    private function get_buu_cuc() {
         $this->load->library('simple_html_dom');
-        $html = file_get_html('https://ems.com.vn/Portal/Detail_VNDC.aspx?id=EF090091965VN');
 
-        echo $html->find('table[id=GRV_THONG_TIN_DONG_CHUYEN] td', -1)->plaintext;
+        $this->load->model('ems/webhook_log_model');
+        $this->load->model('ems/shipments_model');
+
+        $webhook_list = $this->webhook_log_model->get_crons();
+
+        if (!empty($webhook_list)) {
+            foreach ($webhook_list as $webhook_item) {
+                $update_item = [];
+                if (!empty($webhook_item['tracking_code'])) {
+                    $html = file_get_html('https://ems.com.vn/Portal/Detail_VNDC.aspx?id=' . $webhook_item['tracking_code']);
+                    if (strpos($html->__toString(), 'Bưu cục') !== false) {
+                        $buu_cuc_text = $html->find('table[id=GRV_THONG_TIN_DONG_CHUYEN] td', -1)->plaintext;
+                        $buu_cuc_text = html_entity_decode($buu_cuc_text);
+                        $update_item['buu_cuc'] = $buu_cuc_text;
+                        if ($update_item['buu_cuc']) {
+                            $shipments_update['buu_cuc'] = $update_item['buu_cuc'];
+                            $this->shipments_model->update_by_code($webhook_item['tracking_code'], $shipments_update);
+                        }
+                    }
+                }
+                
+                $update_item['cron_status'] = 1;
+                $this->webhook_log_model->update($update_item, $webhook_item['id']);
+            }
+        }
     }
-
     
     private function get_danh_sach_buu_gui() {
         

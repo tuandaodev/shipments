@@ -30,8 +30,8 @@ class Webhook extends CI_Controller {
         $headers = getallheaders();
 
         $api_key = false;
-        if (isset($_REQUEST['api_key']) && !empty($_REQUEST['api_key'])) {
-            $api_key = $_REQUEST['api_key'];
+        if (isset($_REQUEST['key']) && !empty($_REQUEST['key'])) {
+            $api_key = $_REQUEST['key'];
         } else {
             $response['code'] = 'error';
             $response['message'] = 'API Key is missing.';

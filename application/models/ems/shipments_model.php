@@ -22,7 +22,19 @@ class shipments_model extends CI_Model {
         }
     }
 
-    public function get_list()
+    public function get_count()
+    {
+        $query = $this->db->query("SELECT count(*) as count FROM {$this->db_name}");
+        
+        if ($query->num_rows() > 0) {
+            $return = $query->row_array();
+            return $return['count'];
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function get_list($data)
     {
         $sql = 'SELECT 
                 ship.*, 
@@ -36,8 +48,20 @@ class shipments_model extends CI_Model {
             INNER JOIN location_district ld ON ld.code = ship.address_district_code
             INNER JOIN location_province lp ON lp.code = ship.address_province_code
             ';
+        
+        $sql .= " WHERE ship.token_id = {$data['selected_marchant_token']}";
+
+        if ($data['selected_shipment_status']) {
+            $sql .= " AND ship.status = {$data['selected_shipment_status']}";
+        }
+
+        //$sql .= ' ORDER BY ship.id DESC';
+
+        //pre($sql);
 
         $query = $this->db->query($sql);
+
+        
 
         if ($query->num_rows() > 0) {
             return $query->result_array();
@@ -101,6 +125,7 @@ class shipments_model extends CI_Model {
     public function update_by_code($code, $data)
     {
         $where = " code = '{$code}' ";
+        $this->db->set('updated', 'NOW()', FALSE);
         return $this->db->update($this->db_name, $data, $where);
     }
     

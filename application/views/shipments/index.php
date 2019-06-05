@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <th>Trạng Thái</th>
                                         <th>Bưu Cục</th>
                                         <th>Ghi Chú Đơn</th>
-                                        <!-- Webhook info -->                                    
+                                        <!-- Webhook info -->                          
                                         <th>Vị Trí</th>
                                         <th>Ghi Chú Vận Chuyển</th>
                                         <th>Cập Nhật</th>
@@ -59,7 +59,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </thead>
                                 <tbody>
                                 <?php 
-                                
+                                if (!empty($shipments_list)):
                                 foreach ($shipments_list as $item) { ?>
                                     <tr>
                                         <td><?php echo $item['id'] ?></td>
@@ -73,7 +73,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <td><?php echo number_format($item['money_collect']) ?> VNĐ</td>
                                         <td><?php echo number_format($item['total_fee']) ?> VNĐ</td>
                                         <td><?php echo $item['status_name'] ?></td>
-                                        <td><?php //echo $item['']    //Buu Cuc ?></td>
+                                        <td><?php echo $item['buu_cuc'] ?></td>
 
                                         <td><?php echo $item['description'] ?></td>
 
@@ -82,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                                         <td><?php echo $item['datetime'] //lan cuoi cap nhat qua webhook ?></td>
                                     </tr>
-                                <?php } ?>
+                                <?php }; endif; ?>
 
                                 <!-- <tfoot>
                                 </tfoot> -->
