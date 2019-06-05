@@ -54,6 +54,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <!-- Webhook info -->                          
                                         <th>Vị Trí</th>
                                         <th>Ghi Chú Vận Chuyển</th>
+                                        <th>Ngày Tạo</th>
                                         <th>Cập Nhật</th>
                                     </tr>
                                 </thead>
@@ -80,6 +81,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <td><?php echo $item['locate'] ?></td>
                                         <td><?php echo $item['note'] ?></td>
 
+                                        <td><?php echo $item['created_at'] ?></td>
                                         <td><?php echo $item['datetime'] //lan cuoi cap nhat qua webhook ?></td>
                                     </tr>
                                 <?php }; endif; ?>

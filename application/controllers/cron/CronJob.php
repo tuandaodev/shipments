@@ -25,21 +25,30 @@ class CronJob extends CI_Controller {
         }
     }
 
-    public function cron_5_min() {
+    public function cron_shipments() {
         $this->checkSecurity();
+        log_message('error', "cron_shipments: START");
+
         $return = $this->get_danh_sach_buu_gui();
         echo "DONE.";
+        
+        log_message('error', "cron_shipments: DONE");
         exit;
     }
 
-    public function cron_2_min() {
+    public function cron_shipments_crawl() {
         $this->checkSecurity();
+        log_message('error', "cron_shipments_crawl: START");
+
         $return = $this->get_buu_cuc();
         echo "DONE.";
+
+        log_message('error', "cron_shipments_crawl: DONE");
         exit;
     }
 
     private function get_buu_cuc() {
+        
         $this->load->library('simple_html_dom');
 
         $this->load->model('ems/webhook_log_model');
@@ -59,6 +68,8 @@ class CronJob extends CI_Controller {
                         if ($update_item['buu_cuc']) {
                             $shipments_update['buu_cuc'] = $update_item['buu_cuc'];
                             $this->shipments_model->update_by_code($webhook_item['tracking_code'], $shipments_update);
+
+                            echo "Updated Buu Cuc " . $webhook_item['tracking_code'] . " => " . $buu_cuc_text . "<br/>";
                         }
                     }
                 }
@@ -180,7 +191,10 @@ class CronJob extends CI_Controller {
                                 $item_insert['address_full']                    =       $shipping_address['full'];
                             }
                             
-                            $this->db_model->insert($item_insert);
+                            $check_insert = $this->db_model->insert($item_insert);
+                            if ($check_insert) {
+                                echo "Inserted new data: " . @$item_insert['code'] . '<br/>';
+                            }
                         }
                     }
                 }

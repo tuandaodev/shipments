@@ -11,22 +11,24 @@ class SystemCronJob extends Public_Controller {
         parent::__construct();
     }
 
-    public function main() {
-        
+    private function checkSecurity() {
         $cron_token = false;
-        if (isset($_GET['cron_token']) && !empty($_GET['cron_token'])) {
-            $cron_token = $_GET['cron_token'];
+        if (isset($_GET['key']) && !empty($_GET['key'])) {
+            $cron_token = $_GET['key'];
         } else {
-            $message_403 = "You don't have access to the url you where trying to reach.";
-            show_error($message_403 , 403 );
+            exit("Security Check.");
         }
         
         $my_cron_token = $this->option->get_option('cron_token');
         
         if ($cron_token != $my_cron_token) {
-            $message_403 = "You don't have access to the url you where trying to reach.";
-            show_error($message_403 , 403 );
+            exit("Security Check.");
         }
+    }
+
+    public function main() {
+        
+        $this->checkSecurity();
         
         $this->load->model('ems/merchant_token_model');
         $this->merchant_token = $this->merchant_token_model->get_token_cron();
